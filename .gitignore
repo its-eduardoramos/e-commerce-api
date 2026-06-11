@@ -1,0 +1,23 @@
+# --- compilation files ---
+bin/
+obj/
+# --- Private and sensitive settings ---
+appsettings.Development.json
+env
+*.user
+*.userosscache
+*.sln.docstates
+
+#--- Files generates by the IDE ---
+.vs/
+.vscode/
+
+# --- OS files ---
+.DS_Store
+Thumbs.db
+enthumbs.db
+
+# --- Logs and temporary databases
+*.log
+*.sqlite
+*.sqlite3
