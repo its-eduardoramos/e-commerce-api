@@ -18,7 +18,18 @@ namespace api.Mappers
         CreatedAt = productModel.CreatedAt,
         UpdatedAt = productModel.UpdatedAt,
         BrandId = productModel.BrandId,
-        BrandName = productModel.Brand != null ? productModel.Brand.Name : string.Empty
+        BrandName = productModel.Brand != null ? productModel.Brand.Name : string.Empty,
+        ProductCategories = productModel.ProductCategories.Select(pc => pc.ToResponse()).ToList(),
+      };
+    }
+
+    public static ProductCategoryResponse ToResponse(this ProductCategory productCategory)
+    {
+      return new ProductCategoryResponse{
+        // ProductId = productCategory.ProductId,
+        CategoryId = productCategory.CategoryId,
+        Category = productCategory.Category.ToResponse(),
+        CreatedAt = productCategory.CreatedAt
       };
     }
 

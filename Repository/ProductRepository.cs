@@ -16,7 +16,10 @@ namespace api.Repository
 
     public async Task<List<Product>> GetAllAsync()
     {
-      return await _context.Products.Include(p => p.Brand).ToListAsync();
+      return await _context.Products
+        .Include(p => p.Brand)
+        .Include(p => p.ProductCategories)
+        .ThenInclude(pc => pc.Category).ToListAsync();
     }
 
     public async Task<Product?> GetByIdAsync(int id)

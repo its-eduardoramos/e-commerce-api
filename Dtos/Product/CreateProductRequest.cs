@@ -16,5 +16,7 @@ namespace api.Dtos
     public string ImageUrl { get; set; } = string.Empty;
     [Required]
     public int BrandId { get; set; }
+    [Required]
+    public List<int> CategoryIds { get; set; } = new List<int>();
   }
 }

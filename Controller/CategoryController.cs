@@ -8,7 +8,7 @@ namespace api.Controllers
 {
   [Route("api/category")]
   [ApiController]
-  [Authorize]
+  // [Authorize]
   public class CategoryController : ControllerBase
   {
     private readonly ICategoryRepository _categoryRepo;

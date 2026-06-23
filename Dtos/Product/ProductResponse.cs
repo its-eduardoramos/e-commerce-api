@@ -1,3 +1,5 @@
+using api.Models;
+
 namespace api.Dtos
 {
   public class ProductResponse
@@ -12,5 +14,6 @@ namespace api.Dtos
     public DateTime? UpdatedAt { get; set; }
     public int BrandId { get; set; }
     public string BrandName { get; set; } = string.Empty;
+    public List<ProductCategoryResponse> ProductCategories { get; set; } = new List<ProductCategoryResponse>();
   }
 }
