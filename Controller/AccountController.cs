@@ -27,16 +27,20 @@ namespace api.Controllers
     public async Task<IActionResult> Login([FromBody] CreateLoginRequest loginDto)
     {
       var existingUser = await _userManager.Users.FirstOrDefaultAsync(u => u.UserName.Contains(loginDto.UserName.ToLower()));
-      if(existingUser is null) return Unauthorized("User/password invalid");
+      if(existingUser is null) return Unauthorized("Invalid credentials");
 
       var passwordExists = await _signInManager.CheckPasswordSignInAsync(existingUser, loginDto.Password, false);
-      if(!passwordExists.Succeeded) return Unauthorized("User/password invalid");
+      if(!passwordExists.Succeeded) return Unauthorized("Invalid credentials");
+
+      var roles = await _userManager.GetRolesAsync(existingUser);
+      var role = roles.FirstOrDefault();
+      if(role is null) return Unauthorized("An unexpected error occurred.");
       
-      var token = _tokenService.CreateToken(existingUser);
+      var token = _tokenService.CreateToken(existingUser, role);
       return Ok(existingUser.ToResponse(token));
     }
 
-    [Authorize]
+    // [Authorize]
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] CreateAccountRequest accountDto)
     {
@@ -51,7 +55,7 @@ namespace api.Controllers
           
           if(roleResult.Succeeded)
           {
-            var token = _tokenService.CreateToken(appUser);
+            var token = _tokenService.CreateToken(appUser, "User");
             return Ok(appUser.ToResponse(token));
           }
           else

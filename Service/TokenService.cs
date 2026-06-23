@@ -17,13 +17,14 @@ namespace api.TokenService
       _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:SigningKey"]));
     }
 
-    public string CreateToken(AppUser user)
+    public string CreateToken(AppUser user, string role)
     {
       var claims = new List<Claim>
       {
         new Claim(JwtRegisteredClaimNames.NameId, user.Id),
         new Claim(JwtRegisteredClaimNames.GivenName, user.UserName),
-        new Claim(JwtRegisteredClaimNames.Email, user.Email)
+        new Claim(JwtRegisteredClaimNames.Email, user.Email),
+        new Claim("role", role)
       };
 
       var credentials = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
